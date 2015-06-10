@@ -22,7 +22,7 @@ deployment:
       - eval $(docker run -e LATEST=master gliderlabs/pagebuilder circleci-cmd)
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push gliderlabs/pagebuilder
-      - git push origin master:mirror
+      - git push -f origin master:mirror
   mirror:
     branch: mirror
     commands:
