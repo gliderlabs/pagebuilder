@@ -2,6 +2,10 @@ machine:
   services:
     - docker
 
+dependencies:
+  override:
+    - docker build -t gliderlabs/pagebuilder .
+
 test:
   override:
     - /bin/true
