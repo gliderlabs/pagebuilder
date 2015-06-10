@@ -2,6 +2,9 @@
 
 set -ex
 
+branch="$(git rev-parse --abbrev-ref HEAD)"
+latest="${LATEST:-release}"
+
 if [[ -d /tmp/ssh ]]; then
   rm -rf /root/.ssh
   cp -r /tmp/ssh /root/.ssh
@@ -21,8 +24,13 @@ else
   git checkout --track origin/gh-pages
 fi
 
-rm -rf latest
-mv /tmp/site latest
-git add latest
+rm -rf $branch
+mv /tmp/site $branch
+git add $branch
+if [[ "$branch" == "$latest" ]]; then
+  rm -rf latest
+  cp -r $branch latest
+  git add latest
+fi
 git commit -m "$1"
 git push origin gh-pages:gh-pages

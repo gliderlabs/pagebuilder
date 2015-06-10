@@ -8,11 +8,24 @@ dependencies:
 
 test:
   override:
-    - docker run -v $PWD:/project gliderlabs/pagebuilder mkdocs build
+    - /bin/true
 
 deployment:
-  debug:
+  docs:
+    branch: [master, mirror]
+    commands:
+      - >
+        docker run
+          -v /home/ubuntu/.ssh:/tmp/ssh
+          -v $PWD:/project
+          -e LATEST=master
+          gliderlabs/pagebuilder
+            deploy "build $CIRCLE_BUILD_NUM"
+  mirror:
     branch: master
     commands:
       - git push origin master:mirror
-      - docker run -v /home/ubuntu/.ssh:/tmp/ssh -v $PWD:/project gliderlabs/pagebuilder deploy "build $CIRCLE_BUILD_NUM"
+  docker:
+    branch: master
+    commands:
+      - docker push gliderlabs/pagebuilder
