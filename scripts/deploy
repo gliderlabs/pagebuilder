@@ -1,15 +1,11 @@
 #!/bin/bash
-
 set -ex
 
 branch="$(git rev-parse --abbrev-ref HEAD)"
 latest="${LATEST:-release}"
+tag="$TAG"
 
 mkdocs build
-if [[ ! -d site ]]; then
-  echo "No site was built"
-  exit 255
-fi
 cp -r site /tmp/site
 
 if [[ -d /tmp/ssh ]]; then
@@ -25,13 +21,18 @@ else
   git checkout --track origin/gh-pages
 fi
 
-rm -rf $branch
-mv /tmp/site $branch
-git add $branch
+rm -rf "$branch"
+mv /tmp/site "$branch"
+git add "$branch"
 if [[ "$branch" == "$latest" ]]; then
   rm -rf latest
-  cp -r $branch latest
+  cp -r "$branch" latest
   git add latest
+fi
+if [[ "$tag" ]]; then
+  rm -rf "$tag"
+  cp -r "$branch" "$tag"
+  git add "$tag"
 fi
 git commit -m "$1"
 git push origin gh-pages:gh-pages

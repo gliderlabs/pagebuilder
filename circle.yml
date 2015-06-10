@@ -14,22 +14,11 @@ deployment:
   master:
     branch: master
     commands:
-      - |
-        docker run \
-          -v /home/ubuntu/.ssh:/tmp/ssh \
-          -v $PWD:/project \
-          -e LATEST=master \
-          gliderlabs/pagebuilder \
-            deploy "build $CIRCLE_BUILD_NUM"
+      - $(docker run -e LATEST=master gliderlabs/pagebuilder circleci-cmd)
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push gliderlabs/pagebuilder
       - git push origin master:mirror
   mirror:
     branch: mirror
     commands:
-      - |
-        docker run \
-          -v /home/ubuntu/.ssh:/tmp/ssh \
-          -v $PWD:/project \
-          gliderlabs/pagebuilder \
-            deploy "build $CIRCLE_BUILD_NUM"
+      - $(docker run gliderlabs/pagebuilder circleci-cmd)
