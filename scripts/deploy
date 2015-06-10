@@ -4,15 +4,17 @@ if [[ ! -d site ]]; then
   echo "No site"
   exit 255
 fi
+cp -r site /tmp/site
 
 if ! git fetch --depth=1 origin gh-pages; then
   git checkout --orphan gh-pages
+  rm -rf *
 else
   git checkout --track origin/gh-pages
 fi
 
 rm -rf latest
-mv site latest
+mv /tmp/site latest
 git add latest
-git commit -m "build $CIRCLE_BUILD_NUM"
+git commit -m "$1"
 git push origin gh-pages:gh-pages
