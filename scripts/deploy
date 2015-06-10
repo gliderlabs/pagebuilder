@@ -18,6 +18,7 @@ if ! git fetch --depth=1 origin gh-pages; then
   git checkout --orphan gh-pages
   git rm --cached -r .
   cp /tmp/gh-pages/* .
+  git add .
 else
   git checkout --track origin/gh-pages
 fi
