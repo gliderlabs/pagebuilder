@@ -11,8 +11,8 @@ test:
     - docker run -v $PWD:/project gliderlabs/pagebuilder mkdocs build
 
 deployment:
-  docs:
-    branch: [master, mirror]
+  master:
+    branch: master
     commands:
       - |
         docker run \
@@ -21,12 +21,15 @@ deployment:
           -e LATEST=master \
           gliderlabs/pagebuilder \
             deploy "build $CIRCLE_BUILD_NUM"
-  mirror:
-    branch: master
-    commands:
-      - git push origin master:mirror
-  docker:
-    branch: master
-    commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push gliderlabs/pagebuilder
+      - git push origin master:mirror
+  mirror:
+    branch: mirror
+    commands:
+      - |
+        docker run \
+          -v /home/ubuntu/.ssh:/tmp/ssh \
+          -v $PWD:/project \
+          gliderlabs/pagebuilder \
+            deploy "build $CIRCLE_BUILD_NUM"
