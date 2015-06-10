@@ -1,6 +1,8 @@
 FROM gliderlabs/alpine:3.2
-RUN apk --update add python py-pip bash git \
-  && pip install mkdocs
+RUN apk --update add python py-pip bash openssh-client git \
+  && pip install mkdocs \
+  && git config --global user.email "team@gliderlabs.com" \
+  && git config --global user.name "Gliderbot"
 ADD ./scripts/* /bin/
 WORKDIR /project
 EXPOSE 8000
