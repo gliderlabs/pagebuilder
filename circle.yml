@@ -1,0 +1,13 @@
+machine:
+  services:
+    - docker
+
+test:
+  override:
+    - /usr/bin/true
+
+deployment:
+  debug:
+    branch: master
+    commands:
+      - git push origin master:mirror
