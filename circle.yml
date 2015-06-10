@@ -15,4 +15,4 @@ deployment:
     branch: master
     commands:
       - git push origin master:mirror
-      - docker run -v $PWD:/project gliderlabs/pagebuilder deploy "build $CIRCLE_BUILD_NUM"
+      - docker run -v /home/ubuntu/.ssh:/root/.ssh -v $PWD:/project gliderlabs/pagebuilder deploy "build $CIRCLE_BUILD_NUM"
