@@ -2,6 +2,12 @@
 
 set -e
 
+if [[ -d /tmp/ssh ]]; then
+  rm -rf /root/.ssh
+  cp -r /tmp/ssh /root/.ssh
+  chown -R root /root/.ssh
+fi
+
 if [[ ! -d site ]]; then
   echo "No site"
   exit 255
