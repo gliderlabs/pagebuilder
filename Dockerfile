@@ -5,5 +5,6 @@ RUN apk --update add python py-pip bash openssh-client git \
   && git config --global user.name "Gliderbot" \
   && ln -s /root /home/ubuntu
 ADD ./scripts/* /bin/
+ADD ./gh-pages /tmp/gh-pages
 WORKDIR /project
 EXPOSE 8000
