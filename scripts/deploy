@@ -5,17 +5,18 @@ set -ex
 branch="$(git rev-parse --abbrev-ref HEAD)"
 latest="${LATEST:-release}"
 
+mkdocs build
+if [[ ! -d site ]]; then
+  echo "No site was built"
+  exit 255
+fi
+cp -r site /tmp/site
+
 if [[ -d /tmp/ssh ]]; then
   rm -rf /root/.ssh
   cp -r /tmp/ssh /root/.ssh
   chown -R root /root/.ssh
 fi
-
-if [[ ! -d site ]]; then
-  echo "No site"
-  exit 255
-fi
-cp -r site /tmp/site
 
 if ! git fetch --depth=1 origin gh-pages; then
   git checkout --orphan gh-pages
