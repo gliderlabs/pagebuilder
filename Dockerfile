@@ -1,6 +1,6 @@
 FROM gliderlabs/alpine:3.2
 RUN apk --update add python py-pip bash openssh-client git \
-  && pip install --upgrade pip mkdocs \
+  && pip install --upgrade mkdocs \
   && git config --global user.email "team@gliderlabs.com" \
   && git config --global user.name "Gliderbot" \
   && ln -s /root /home/ubuntu

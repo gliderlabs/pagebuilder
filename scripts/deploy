@@ -36,5 +36,6 @@ if [[ "$tag" ]]; then
   cp -r "$branch" "$tag"
   git add "$tag"
 fi
-git commit -m "$1"
-git push origin gh-pages:gh-pages
+if git commit -m "$1"; then
+  git push origin gh-pages:gh-pages
+fi
