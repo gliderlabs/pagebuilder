@@ -6,15 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="http://gliderlabs.github.io/pagebuilder/">
         <link rel="shortcut icon" href="./img/favicon.ico">
 
-	<title>pagebuilder</title>
+	<title>Pagebuilder</title>
 
         <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="./css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="./css/highlight.css">
+        <link href="./css/base.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -25,30 +25,80 @@
         
     </head>
 
-    <body class="homepage">
+    <body>
 
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
 
         <!-- Collapsed navigation -->
         <div class="navbar-header">
-            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
             <!-- Main title -->
-            <a class="navbar-brand" href=".">pagebuilder</a>
+            <a class="navbar-brand" href=".">Pagebuilder</a>
         </div>
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
             
+            
+                <li class="active">
+                    <a href=".">Home</a>
+                </li>
+            
+            
+            </ul>
 
+            <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
+                <li class="disabled">
+                    <a rel="next" >
+                        <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
+                <li class="disabled">
+                    <a rel="prev" >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Versions <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li>
+                          <a href="/pagebuilder/latest">latest: v1</a>
+                      </li>
+                      
+                        <li>
+                            <a href="/pagebuilder/master">master</a>
+                        </li>
+                      
+                        <li>
+                            <a href="/pagebuilder/mirror">mirror</a>
+                        </li>
+                      
+                        <li>
+                            <a href="/pagebuilder/v1">v1</a>
+                        </li>
+                      
+                    </ul>
+                </li>
                 
+                <li>
+                    <a href="https://github.com/gliderlabs/pagebuilder">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
                 
             </ul>
         </div>
@@ -56,60 +106,197 @@
 </div>
 
         <div class="container">
-            
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#foobar">Foobar</a></li>
+        
+            <li><a href="#foobar-foobar">Foobar Foobar</a></li>
+        
     
     </ul>
 </div></div>
-                <div class="col-md-9" role="main">
+            <div class="col-md-9" role="main">
 
-<p>Hello world again.</p></div>
-            
+<h1 id="foobar">Foobar</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elementum massa purus, ut tristique ex ultrices at. Praesent ac diam dui. Nulla facilisi. Nullam faucibus sollicitudin mi non porttitor. In nec imperdiet risus, cursus consequat leo. Nunc sit amet ex sed lacus feugiat elementum quis nec tellus. Praesent at ante non ligula interdum lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus ultricies vitae leo quis maximus.</p>
+<h2 id="foobar-foobar">Foobar Foobar</h2>
+<p>Nulla dapibus accumsan mi, in porta ex congue viverra. Ut egestas auctor lectus. Fusce urna nulla, vulputate sit amet turpis a, mollis lobortis velit. Praesent ac pulvinar augue, eu iaculis sapien. Morbi sollicitudin lacus ut mauris porta elementum. Sed dapibus, magna congue semper tincidunt, nisi justo bibendum nulla, fermentum pharetra tellus nulla congue dui. Morbi mollis tellus a libero viverra, ut aliquam dui tempus. Curabitur vestibulum elit ultricies porta ultrices. Maecenas blandit, lectus non vestibulum sodales, est lorem sollicitudin libero, in accumsan urna velit vitae metus. Mauris gravida non ante vel consectetur. Vestibulum finibus suscipit magna, vel fermentum est rutrum vitae. Donec luctus condimentum imperdiet.</p>
+<pre><code>package httpstream
+
+import (
+    &quot;encoding/json&quot;
+    &quot;fmt&quot;
+    &quot;log&quot;
+    &quot;net/http&quot;
+    &quot;os&quot;
+    &quot;strconv&quot;
+
+    &quot;code.google.com/p/go.net/websocket&quot;
+    &quot;github.com/gorilla/mux&quot;
+
+    &quot;github.com/gliderlabs/logspout/router&quot;
+)
+
+func init() {
+    router.HttpHandlers.Register(LogStreamer, &quot;logs&quot;)
+}
+
+func debug(v ...interface{}) {
+    if os.Getenv(&quot;DEBUG&quot;) != &quot;&quot; {
+        log.Println(v...)
+    }
+}
+
+func LogStreamer() http.Handler {
+    logs := mux.NewRouter()
+    logsHandler := func(w http.ResponseWriter, req *http.Request) {
+        params := mux.Vars(req)
+        route := new(router.Route)
+
+        if params[&quot;value&quot;] != &quot;&quot; {
+            switch params[&quot;predicate&quot;] {
+            case &quot;id&quot;:
+                route.FilterID = params[&quot;value&quot;]
+                if len(route.ID) &gt; 12 {
+                    route.FilterID = route.FilterID[:12]
+                }
+            case &quot;name&quot;:
+                route.FilterName = params[&quot;value&quot;]
+            }
+        }
+
+        if route.FilterID != &quot;&quot; &amp;&amp; !router.Routes.RoutingFrom(route.FilterID) {
+            http.NotFound(w, req)
+            return
+        }
+
+        defer debug(&quot;http: logs streamer disconnected&quot;)
+        logstream := make(chan *router.Message)
+        defer close(logstream)
+
+        var closer &lt;-chan bool
+        if req.Header.Get(&quot;Upgrade&quot;) == &quot;websocket&quot; {
+            debug(&quot;http: logs streamer connected [websocket]&quot;)
+            closerBi := make(chan bool)
+            defer websocketStreamer(w, req, logstream, closerBi)
+            closer = closerBi
+        } else {
+            debug(&quot;http: logs streamer connected [http]&quot;)
+            defer httpStreamer(w, req, logstream, route.MultiContainer())
+            closer = w.(http.CloseNotifier).CloseNotify()
+        }
+        route.OverrideCloser(closer)
+
+        router.Routes.Route(route, logstream)
+    }
+    logs.HandleFunc(&quot;/logs/{predicate:[a-zA-Z]+}:{value}&quot;, logsHandler).Methods(&quot;GET&quot;)
+    logs.HandleFunc(&quot;/logs&quot;, logsHandler).Methods(&quot;GET&quot;)
+    return logs
+}
+
+type Colorizer map[string]int
+
+// returns up to 14 color escape codes (then repeats) for each unique key
+func (c Colorizer) Get(key string) string {
+    i, exists := c[key]
+    if !exists {
+        c[key] = len(c)
+        i = c[key]
+    }
+    bright := &quot;1;&quot;
+    if i%14 &gt; 6 {
+        bright = &quot;&quot;
+    }
+    return &quot;\x1b[&quot; + bright + &quot;3&quot; + strconv.Itoa(7-(i%7)) + &quot;m&quot;
+}
+
+func marshal(obj interface{}) []byte {
+    bytes, err := json.MarshalIndent(obj, &quot;&quot;, &quot;  &quot;)
+    if err != nil {
+        log.Println(&quot;marshal:&quot;, err)
+    }
+    return bytes
+}
+
+func normalName(name string) string {
+    return name[1:]
+}
+
+func websocketStreamer(w http.ResponseWriter, req *http.Request, logstream chan *router.Message, closer chan bool) {
+    websocket.Handler(func(conn *websocket.Conn) {
+        for logline := range logstream {
+            if req.URL.Query().Get(&quot;source&quot;) != &quot;&quot; &amp;&amp; logline.Source != req.URL.Query().Get(&quot;source&quot;) {
+                continue
+            }
+            _, err := conn.Write(append(marshal(logline), '\n'))
+            if err != nil {
+                closer &lt;- true
+                return
+            }
+        }
+    }).ServeHTTP(w, req)
+}
+
+func httpStreamer(w http.ResponseWriter, req *http.Request, logstream chan *router.Message, multi bool) {
+    var colors Colorizer
+    var usecolor, usejson bool
+    nameWidth := 16
+    if req.URL.Query().Get(&quot;colors&quot;) != &quot;off&quot; {
+        colors = make(Colorizer)
+        usecolor = true
+    }
+    if req.Header.Get(&quot;Accept&quot;) == &quot;application/json&quot; {
+        w.Header().Add(&quot;Content-Type&quot;, &quot;application/json&quot;)
+        usejson = true
+    } else {
+        w.Header().Add(&quot;Content-Type&quot;, &quot;text/plain&quot;)
+    }
+    for logline := range logstream {
+        if req.URL.Query().Get(&quot;sources&quot;) != &quot;&quot; &amp;&amp; logline.Source != req.URL.Query().Get(&quot;sources&quot;) {
+            continue
+        }
+        if usejson {
+            w.Write(append(marshal(logline), '\n'))
+        } else {
+            if multi {
+                name := normalName(logline.Container.Name)
+                if len(name) &gt; nameWidth {
+                    nameWidth = len(name)
+                }
+                if usecolor {
+                    w.Write([]byte(fmt.Sprintf(
+                        &quot;%s%&quot;+strconv.Itoa(nameWidth)+&quot;s|%s\x1b[0m\n&quot;,
+                        colors.Get(name), name, logline.Data,
+                    )))
+                } else {
+                    w.Write([]byte(fmt.Sprintf(
+                        &quot;%&quot;+strconv.Itoa(nameWidth)+&quot;s|%s\n&quot;, name, logline.Data,
+                    )))
+                }
+            } else {
+                w.Write(append([]byte(logline.Data), '\n'))
+            }
+        }
+        w.(http.Flusher).Flush()
+    }
+}
+</code></pre>
+
+<p>Nullam rutrum nisi non velit iaculis, eu condimentum nibh placerat. Cras eu urna eu nunc pharetra gravida non id ex. Vestibulum at dictum sapien. Quisque tristique, erat pretium venenatis fermentum, sapien mauris suscipit arcu, nec sollicitudin dui diam vel ipsum. Duis eleifend nisi id ultricies imperdiet. Sed viverra metus vel mi tincidunt cursus. Suspendisse nulla risus, aliquam at mollis vitae, porttitor sed quam. Sed sit amet magna tortor. Suspendisse potenti. Phasellus ante orci, sagittis tincidunt luctus sit amet, dapibus vitae augue. Maecenas elementum dignissim augue eu dignissim. Integer molestie, sem quis rhoncus semper, lectus diam sollicitudin ligula, vel euismod tellus tortor non libero. Phasellus ac nibh vitae nulla varius porta eu vitae mauris. Morbi mattis tincidunt arcu et dapibus.</p>
+<p>Maecenas iaculis est dignissim leo lobortis varius. Aliquam at condimentum enim. Cras et tincidunt enim. In quis dapibus magna. Sed sed tellus sem. Curabitur vel justo leo. Sed eget tincidunt nisl. Sed nec lacus at massa sollicitudin bibendum vel vel nibh. Vivamus finibus erat vel tempor rutrum.</p>
+<p>Cras blandit imperdiet sem, vel viverra est tincidunt sed. Sed sapien dui, pretium in ornare in, semper vel orci. Maecenas a quam velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla egestas, diam id venenatis porta, mauris massa hendrerit felis, eu tristique leo urna egestas tortor. Vestibulum vel turpis ante. Etiam vulputate in lectus ut lobortis. Aenean semper, tellus lacinia porttitor dapibus, diam nibh rhoncus quam, vitae interdum sapien eros quis augue. Nam id odio suscipit, congue velit vel, maximus ligula. Vestibulum feugiat fringilla posuere.</p></div>
         </div>
 
         <footer class="col-md-12">
             <hr>
             
-            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
         </footer>
 
         <script src="./js/jquery-1.10.2.min.js"></script>
         <script src="./js/bootstrap-3.0.3.min.js"></script>
         <script src="./js/highlight.pack.js"></script>
-        <script>var base_url = '.';</script>
-        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
         <script src="./js/base.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            From here you can search these documents. Enter
-                            your search terms below.
-                        </p>
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                            </div>
-                        </form>
-                        <div id="mkdocs-search-results"></div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </body>
 </html>
-
-<!--
-MkDocs version : 0.14.0
-Build Date UTC : 2015-06-11 00:02:59.691363
--->
