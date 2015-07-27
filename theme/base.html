@@ -66,7 +66,10 @@
         <script>
           $( document ).ready(function() {
               $.getJSON("/{{ config.extra.name }}/versions.json", function(data) {
-                console.log(data)
+                $("#versions-dropdown").append('<li><a href="/{{ config.extra.name }}/latest">latest ('+data.latest+')</a></li>');
+                $.each(data.versions, function( index, value ) {
+                  $("#versions-dropdown").append('<li><a href="/{{ config.extra.name }}/'+value+'">'+value+'</a></li>');
+                });
               });
           });
         </script>
