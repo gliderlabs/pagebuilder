@@ -71,12 +71,7 @@
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Versions <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                      
-                        <li>
-                            <a href="/pagebuilder/master">master</a>
-                        </li>
-                      
+                    <ul class="dropdown-menu" id="versions-dropdown">
                     </ul>
                 </li>
                 
@@ -178,7 +173,10 @@ but the <code>latest</code> directory will be a copy of it.</p>
         <script>
           $( document ).ready(function() {
               $.getJSON("/pagebuilder/versions.json", function(data) {
-                console.log(data)
+                $("#versions-dropdown").append('<li><a href="/pagebuilder/latest">latest ('+data.latest+')</a></li>');
+                $.each(data.versions, function( index, value ) {
+                  $("#versions-dropdown").append('<li><a href="/pagebuilder/'+value+'">'+value+'</a></li>');
+                });
               });
           });
         </script>
