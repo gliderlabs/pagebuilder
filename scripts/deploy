@@ -2,9 +2,10 @@
 set -ex
 
 branch="$(git rev-parse --abbrev-ref HEAD)"
-latest="${LATEST:-release}"
+master="${MASTER:-master}"
 tag="$TAG"
 
+cp -r "$PWD" /tmp/project
 mkdocs build
 cp -r site /tmp/site
 
@@ -26,16 +27,38 @@ fi
 rm -rf "$branch"
 mv /tmp/site "$branch"
 git add "$branch"
-if [[ "$branch" == "$latest" ]]; then
+
+if [[ "$branch" == "$master" ]]; then
   rm -rf latest
   cp -r "$branch" latest
   git add latest
+  if [[ -f latest/homepage.html ]]; then
+    git mv latest/homepage.html index.html
+  else
+    rm -rf index.html
+    cp /tmp/gh-pages/index.html .
+    git add index.html
+  fi
+  latest="$branch"
 fi
+
 if [[ "$tag" ]]; then
   rm -rf "$tag"
   cp -r "$branch" "$tag"
   git add "$tag"
+  if [[ "$branch" == "$master" ]]; then
+    latest="$tag"
+  fi
 fi
+
+if [[ "$latest" ]]; then
+  export LATEST="$latest"
+  sigil -p -i \
+    '{"latest": "$LATEST", "versions": ["{{ (yaml "/tmp/project/mkdocs.yml").extra.versions | join "\", \"" }}"]}' \
+    > versions.json
+  git add versions.json
+fi
+
 if git commit -m "$1"; then
   git push origin gh-pages:gh-pages
 fi

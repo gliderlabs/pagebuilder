@@ -14,7 +14,7 @@ deployment:
   master:
     branch: master
     commands:
-      - eval $(docker run -e LATEST=master gliderlabs/pagebuilder circleci-cmd)
+      - eval $(docker run gliderlabs/pagebuilder circleci-cmd)
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push gliderlabs/pagebuilder
 

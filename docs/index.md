@@ -52,9 +52,9 @@ This is a convenience wrapper that automates all the extra Docker flags needed t
 allow pushing the built site to `gh-pages` branch of the repo.
 
 You need to run this command for every branch you want to build docs for. If
-you want to use a branch other than `release` to be used for the `latest` docs,
-specify it with `LATEST` environment variable. Here is how you would tell it to
-use `master` for latest. It will still make a `master` directory on Github Pages,
+you want to use a branch other than `master` to be used for the `latest` docs,
+specify it with `MASTER` environment variable. Here is how you would tell it to
+use `release` for latest. It will still make a `release` directory on Github Pages,
 but the `latest` directory will be a copy of it.
 
 ```yaml
@@ -62,5 +62,5 @@ deployment:
   master:
     branch: master
     commands:
-      - eval $(docker run -e LATEST=master gliderlabs/pagebuilder circleci-cmd)
+      - eval $(docker run -e MASTER=release gliderlabs/pagebuilder circleci-cmd)
 ```
