@@ -1,7 +1,1 @@
-{
-  "latest": "master",
-  "versions": [
-    "master",
-    "mirror"
-  ]
-}
+{"latest": "master", "versions": ["master"]}
