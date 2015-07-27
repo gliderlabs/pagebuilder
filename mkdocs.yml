@@ -5,6 +5,5 @@ dev_addr: 0.0.0.0:8000
 theme_dir: /pagebuilder/theme
 extra:
   name: pagebuilder
-  latest: master
   versions:
     - master

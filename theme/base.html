@@ -63,5 +63,12 @@
         {%- for path in extra_javascript %}
         <script src="{{ path }}"></script>
         {%- endfor %}
+        <script>
+          $( document ).ready(function() {
+              $.getJSON("/{{ config.extra.name }}/versions.json", function(data) {
+                console.log(data)
+              });
+          });
+        </script>
     </body>
 </html>

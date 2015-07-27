@@ -54,9 +54,6 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Versions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                      <li>
-                          <a href="/{{ config.extra.name }}/latest">latest: {{ config.extra.latest }}</a>
-                      </li>
                       {% for version in config.extra.versions %}
                         <li>
                             <a href="/{{ config.extra.name }}/{{ version }}">{{ version }}</a>
