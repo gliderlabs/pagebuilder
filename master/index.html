@@ -8,7 +8,7 @@
         <link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
         
         
-        <link rel="canonical" href="http://gliderlabs.github.io/pagebuilder/">
+        <link rel="canonical" href="https://gliderlabs.com/pagebuilder/">
         <link rel="shortcut icon" href="./img/favicon.ico">
 
 	<title>Pagebuilder</title>
@@ -109,6 +109,7 @@
             <div class="col-md-8 content" role="main">
 
 <h1 id="pagebuilder">Pagebuilder</h1>
+<p><a href="https://circleci.com/gh/gliderlabs/pagebuilder"><img alt="CircleCI" src="https://img.shields.io/circleci/project/gliderlabs/pagebuilder/release.svg" /></a></p>
 <p>This is the tool Glider Labs uses to generate and deploy project documentation.</p>
 <ul>
 <li>Built around <a href="http://www.mkdocs.org/">MkDocs</a> for generating sites based on Markdown</li>
@@ -123,18 +124,13 @@ creating a <code>docs</code> folder for Markdown and a <code>mkdocs.yml</code> f
 <h2 id="configuration">Configuration</h2>
 <p>The only extra configuration Pagebuilder expects in <code>mkdocs.yml</code> is:</p>
 <pre><code class="yaml">theme_dir: /pagebuilder/theme
-extra:
-  name: &lt;your project name&gt;
-  latest: &lt;latest version&gt;
-  versions:
-    - master
-    - v1
-    - &lt;branches and tags to link under versions nav&gt;
 </code></pre>
 
+<p>You should also set <code>site_url</code> to the URL of the base of the deployment for the
+version dropdown to work correctly.</p>
 <h2 id="previewing">Previewing</h2>
 <p>You can preview your docs with Pagebuilder in Docker. Running from project root:</p>
-<pre><code class="bash">$ docker run --rm -p 8000:8000 -v $PWD:/project gliderlabs/pagebuilder mkdocs serve
+<pre><code class="bash">$ docker run --rm -p 8000:8000 -v $PWD:/work gliderlabs/pagebuilder mkdocs serve
 </code></pre>
 
 <h2 id="circleci">CircleCI</h2>
@@ -174,10 +170,10 @@ but the <code>latest</code> directory will be a copy of it.</p>
         <script src="./js/base.js"></script>
         <script>
           $( document ).ready(function() {
-              $.getJSON("/pagebuilder/versions.json", function(data) {
-                $("#versions-dropdown").append('<li><a href="/pagebuilder/latest">latest ('+data.latest+')</a></li>');
+              $.getJSON("https://gliderlabs.com/pagebuilder/versions.json", function(data) {
+                $("#versions-dropdown").append('<li><a href="https://gliderlabs.com/pagebuilder/latest">latest ('+data.latest+')</a></li>');
                 $.each(data.versions, function( index, value ) {
-                  $("#versions-dropdown").append('<li><a href="/pagebuilder/'+value+'">'+value+'</a></li>');
+                  $("#versions-dropdown").append('<li><a href="https://gliderlabs.com/pagebuilder/'+value+'">'+value+'</a></li>');
                 });
               });
           });
