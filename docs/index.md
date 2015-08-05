@@ -1,6 +1,6 @@
 # Pagebuilder
 
-[![CircleCI](https://img.shields.io/circleci/project/gliderlabs/pagebuilder/release.svg)](https://circleci.com/gh/gliderlabs/pagebuilder)
+[![CircleCI](https://img.shields.io/circleci/project/gliderlabs/pagebuilder.svg)](https://circleci.com/gh/gliderlabs/pagebuilder)
 
 This is the tool Glider Labs uses to generate and deploy project documentation.
 
