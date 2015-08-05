@@ -1,5 +1,7 @@
 # Pagebuilder
 
+[![CircleCI](https://img.shields.io/circleci/project/gliderlabs/pagebuilder/release.svg)](https://circleci.com/gh/gliderlabs/pagebuilder)
+
 This is the tool Glider Labs uses to generate and deploy project documentation.
 
 * Built around [MkDocs](http://www.mkdocs.org/) for generating sites based on Markdown
@@ -18,21 +20,16 @@ The only extra configuration Pagebuilder expects in `mkdocs.yml` is:
 
 ```yaml
 theme_dir: /pagebuilder/theme
-extra:
-  name: <your project name>
-  latest: <latest version>
-  versions:
-    - master
-    - v1
-    - <branches and tags to link under versions nav>
 ```
+You should also set `site_url` to the URL of the base of the deployment for the
+version dropdown to work correctly.
 
 ## Previewing
 
 You can preview your docs with Pagebuilder in Docker. Running from project root:
 
 ```bash
-$ docker run --rm -p 8000:8000 -v $PWD:/project gliderlabs/pagebuilder mkdocs serve
+$ docker run --rm -p 8000:8000 -v $PWD:/work gliderlabs/pagebuilder mkdocs serve
 ```
 
 ## CircleCI

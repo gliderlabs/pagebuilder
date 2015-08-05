@@ -54,7 +54,7 @@ fi
 if [[ "$latest" ]]; then
   export LATEST="$latest"
   sigil -i \
-    '{"latest": "{{ var "LATEST" }}", "versions": ["{{ (yaml "/tmp/project/mkdocs.yml").extra.versions | join "\", \"" }}"]}' \
+    '{"latest": "{{ var "LATEST" }}", "versions": ["{{ dirs "." | drop "latest" | join "\", \"" }}"]}' \
     > versions.json
   git add versions.json
 fi
