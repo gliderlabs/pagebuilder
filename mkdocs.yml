@@ -1,9 +1,5 @@
 site_name: Pagebuilder
-site_url: http://gliderlabs.github.io/pagebuilder
+site_url: https://gliderlabs.com/pagebuilder
 repo_url: https://github.com/gliderlabs/pagebuilder
 dev_addr: 0.0.0.0:8000
 theme_dir: /pagebuilder/theme
-extra:
-  name: pagebuilder
-  versions:
-    - master
