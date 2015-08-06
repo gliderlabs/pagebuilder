@@ -2,6 +2,11 @@ body {
     padding-top: 70px;
 }
 
+code {
+  color: #333;
+  background-color: #f4f4f4;
+}
+
 .content p, .content li, .content h1, .content h2, .content h3, .content h4 {
   font-family: 'Vollkorn', 'Lora', 'Georgia', serif;
   color: #3E4349;
