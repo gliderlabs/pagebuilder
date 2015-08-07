@@ -21,6 +21,7 @@ if ! git fetch --depth=1 origin gh-pages; then
   cp /tmp/gh-pages/* .
   ls -1 /tmp/gh-pages | xargs git add
 else
+  git stash # removes any changes files 
   git checkout --track origin/gh-pages
 fi
 
