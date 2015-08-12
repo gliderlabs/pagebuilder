@@ -3,3 +3,4 @@ site_url: https://gliderlabs.com/pagebuilder
 repo_url: https://github.com/gliderlabs/pagebuilder
 dev_addr: 0.0.0.0:8000
 theme_dir: /pagebuilder/theme
+google_analytics: ['UA-58928488-1', 'auto']

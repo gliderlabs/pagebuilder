@@ -21,7 +21,7 @@ if ! git fetch --depth=1 origin gh-pages; then
   cp /tmp/gh-pages/* .
   ls -1 /tmp/gh-pages | xargs git add
 else
-  git stash # removes any changes files 
+  git stash # removes any changed files
   git checkout --track origin/gh-pages
 fi
 
@@ -55,7 +55,7 @@ fi
 if [[ "$latest" ]]; then
   export LATEST="$latest"
   sigil -i \
-    '{"latest": "{{ var "LATEST" }}", "versions": ["{{ dirs "." | drop "latest" | drop ".git" | drop "site" | join "\", \"" }}"]}' \
+    '{"latest": "{{ var "LATEST" }}", "versions": ["{{ dirs "." | drop "latest" | drop ".git" | drop "site" | drop "build" | join "\", \"" }}"]}' \
     > versions.json
   git add versions.json
 fi
